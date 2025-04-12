@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delicious Cakes Bakery</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Header Styles */
+        header {
+            background: #ffcccb;
+            padding: 20px;
+            position: relative;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .social-icons {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+        }
+
+        .social-icons a {
+            color: #333;
+            margin-left: 15px;
+            font-size: 24px;
+        }
+
+        /* Navigation */
+        nav {
+            background: #5f5e5e;
+            padding: 15px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin: 0 15px;
+           
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .menu-toggle {
+            display: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Hero Section with Prices */
+        .hero {
+            padding: 100px 20px;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
+                        url('hero-bg.jpg') center/cover;
+            color: white;
+            text-align: center;
+        }
+
+        .price-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin: 50px auto;
+            max-width: 1200px;
+        }
+
+        .price-item {
+            background: rgba(156, 155, 155, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .price-item:hover {
+            transform: translateY(-10px);
+        }
+
+        /* Image Slider */
+        .slider-container {
+            width: 100%;
+            height: 600px;
+            position: center;
+            overflow: hidden;
+        }
+
+        .slider {
+            display: flex;
+            transition: transform 0.3s ease;
+        }
+
+        .slide {
+            min-width: 100%;
+            height: 600px;
+            position: relative;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Product Sections */
+        .section {
+            padding: 80px 20px;
+        }
+
+        .section h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #ff6b6b;
+            font-size: 2.5em;
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .image-wrapper {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .image-wrapper:hover {
+            transform: scale(1.05);
+        }
+
+        .image-wrapper img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+
+        .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .image-wrapper:hover .image-overlay {
+            opacity: 1;
+        }
+
+        /* Contact Form */
+        .contact-section {
+            padding: 80px 20px;
+            background: #f9f9f9;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+
+        .form-group textarea {
+            height: 150px;
+        }
+
+        /* Buttons */
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background: #ff5252;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255,107,107,0.4);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .hero {
+                padding: 60px 20px;
+            }
+
+            .price-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .image-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .image-wrapper img {
+                height: 300px;
+            }
+
+            .slider-container {
+                height: 400px;
+            }
+
+            .slide {
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">Bakery Delights</div>
+        <div class="social-icons">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-whatsapp"></i></a>
+        </div>
+    </header>
+
+    <nav>
+        <div class="menu-toggle">☰</div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#birthday">Birthday</a></li>
+            <li><a href="#wedding">Wedding</a></li>
+            <li><a href="#cupcakes">Cupcakes</a></li>
+            <li><a href="#meatpies">Meat Pies</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero" id="home">
+        <h1>Premium Quality Baked Goods</h1>
+        <div class="price-grid">
+            <div class="price-item">
+                <h3>Birthday Cakes</h3>
+                <p>From 37000</p>
+            </div>
+            <div class="price-item">
+                <h3>Wedding Cakes</h3>
+                <p>From 150000</p>
+            </div>
+            <div class="price-item">
+                <h3>Cupcakes</h3>
+                <p>1500 each</p>
+            </div>
+            <div class="price-item">
+                <h3>Meat Pies</h3>
+                <p>500 each</p>
+            </div>
+        </div>
+        <button class="cta-button">View Menu</button>
+    </section>
+
+    <div class="slider-container">
+        <div class="slider">
+            <div class="slide">
+                <img src="18 Classy Wedding Cakes That'll Make Your Jaw Drop.jpeg" alt="Wedding Cake Display">
+            </div>
+            <div class="slide">
+                <img src="Nutella Bueno Cupcakes.jpeg" alt="Cupcake Collection">
+            </div>
+            <div class="slide">
+                <img src="32 Simple and Stylish 60th Birthday Cake Ideas.jpeg" alt="Birthday Cake Design">
+                
+            </div>
+            <div class="slide">
+                <img src="Nigerian meat pie.jpeg" alt="meatpie">
+            </div>
+        </div>
+    </div>
+
+    <section class="section" id="birthday">
+        <h2>Birthday Cakes</h2>
+        <div class="image-grid">
+         <img src="a9662f7c-3198-4a7f-8ea9-892333f02472.jpeg" alt="">   
+        <img src="24 Stunning 50th Birthday Cake Ideas to Celebrate in Style.jpeg" alt="Birthday Cakes">
+        <img src="Celebrate Barbie Themed Party with a Stunning Pink Cake_ Inspiring Pink Cake Designs and Ideas.jpeg" alt="Birthday Cakes">
+        <img src="18 Rustic Wedding Cake Ideas That'll Make Your Guests Swoon.jpeg" alt="Birthday Cakes">
+        
+        
+            <div class="image-wrapper">
+                <img src="Creative Neon Cake Ideas For Your Next Party.jpeg" alt="Chocolate Birthday Cake">
+                <
+                <div class="image-overlay">
+                    <button class="cta-button">Order Now</button>
+                </div>
+            </div>
+            <!-- Add 5 more image-wrapper divs -->
+        </div>
+    </section>
+
+    <section class="section" id="wedding">
+        <h2>Wedding Cakes</h2>
+        <div class="image-grid">
+            <!-- 6 wedding cake images -->
+             <img src="hero-bg.jpeg" alt="">
+             <img src="A Slice of the Past_ 17 Vintage Wedding Cakes for Modern Love Stories.jpeg" alt="">
+             <img src="Vintage Wedding Cake Ideas for Timeless Elegance.jpeg" alt="">
+             <img src="Chic 5-Tier Wedding Cakes with Modern Flair.jpeg" alt="">
+             <img src="a9662f7c-3198-4a7f-8ea9-892333f02472.jpeg" alt="">
+             <img src="d11357c6-13d4-4ffd-87ce-dcf97bb203c9.jpeg" alt="">
+        </div>
+    </section>
+
+    <section class="section" id="cupcakes">
+        <h2>Cupcakes</h2>
+        <div class="image-grid">
+            <!-- 6 cupcake images -->
+             <img src="Perfect Vanilla Cupcake Recipe (VIDEO).jpeg" alt="">
+             <img src="Simple Valentine’s Day Cupcakes Recipe - Celebrate Love Deliciously.jpeg" alt="">
+             <img src="White Chocolate Blueberry Cupcakes_ Sweet and Tangy Delight!.jpeg" alt="">
+             <img src="Neapolitan Ice Cream Cupcakes.jpeg" alt="">
+             <img src="Perfect Vanilla Cupcake Recipe (VIDEO).jpeg" alt="">
+             <img src="White Chocolate Blueberry Cupcakes_ Sweet and Tangy Delight!.jpeg" alt="">
+        </div>
+    </section>
+
+    <section class="section" id="meatpies">
+        <h2>Meat Pies</h2>
+        <div class="image-grid">
+            <!-- 6 meat pie images -->
+             <img src="Nigerian Meat Pie Recipe_ Best Recipe Ever.jpeg" alt="">
+             <img src="Nigerian meatpie.jpeg" alt="">
+             <img src="Nigerian meat pie.jpeg" alt="">
+             <img src="d8c03ab0-c398-4b31-aecd-089339054798.jpeg" alt="">
+             <img src="African and Continental Food Recipes.jpeg" alt="">
+        </div>
+    </section>
+
+    <section class="contact-section" id="contact">
+        <h2>Contact Us</h2>
+        <form class="contact-form">
+            <div class="form-group">
+                <input type="text" placeholder="Full Name" required>
+            </div>
+            <div class="form-group">
+                <input type="email" placeholder="Email Address" required>
+            </div>
+            <div class="form-group">
+                <input type="tel" placeholder="Phone Number" required>
+            </div>
+            <div class="form-group">
+                <textarea placeholder="Your Message" required></textarea>
+            </div>
+            <button type="submit" class="cta-button">Send Message</button>
+        </form>
+    </section>
+
+    <footer style="background: #333; color: white; text-align: center; padding: 20px;">
+        <p>&copy; 2023 Bakery Delights. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Mobile Menu
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Image Slider
+        const slider = document.querySelector('.slider');
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+        }
+        setInterval(nextSlide, 5000);
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
